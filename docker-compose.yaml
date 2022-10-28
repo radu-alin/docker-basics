@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  # mongodb
+  mongodb:
+    container_name: mongodb
+    image: 'mongo'
+    ports:
+      - '27017:27017'
+    volumes:
+      - data:/data/db
+    env_file:
+      - ./env/mongo.env
+
+  # backend
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  # frontend
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  logs:
+
+  # mongodb:
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME= alin
+  #     - MONGO_INITDB_ROOT_USERNAME: alin
+  #   networks:
+  #     - goals-net
+  #   backend:
+  #     context: ./backend
+  #     dockerfile: Dockerfile-dev
+  # frontend:
+  #   stdin_open: true
+  #   tty: true

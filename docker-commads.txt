@@ -1,0 +1,66 @@
+--- image build
+
+# docker build -t goals-node .
+# docker build -t goals-react . 
+
+--- image
+
+# docker images
+
+# docker image ls
+
+# docket rmi IMAGE_NAME
+
+--- container run
+
+# mongodb
+<!-- # docker run --name mongodb -d -p 27017:27017 --rm mongo -->
+<!-- # docker run --name mongodb --network goals-net -v data:/data/db -d --rm mongo -->
+# docker run --name mongodb --network goals-net -e MONGO_INITDB_ROOT_USERNAME=alin -e MONGO_INITDB_ROOT_PASSWORD=test -v data:/data/db -d --rm mongo
+
+# backend
+<!-- # docker run --name goals-backend --add-host=host.docker.internal:host-gateway --rm -d -p 8080:8080 goals-node -->
+<!-- # docker run --name goals-backend --network goals-net --rm -d -p 8080:8080 -v "${PWD}:/app/logs" -v "${PWD}:/app" -v /app/node_modules goals-node -->
+<!-- # docker run --name goals-backend --network goals-net --rm -d -p 8080:8080 -v logs:/app/logs -v "${PWD}:/app" -v /app/node_modules goals-node -->
+# docker run --name goals-backend -e MONGODB_USERNAME=alin -e MONGODB_PASSWORD=test --network goals-net -v logs:/app/logs -v "${PWD}:/app" -v /app/node_modules -p 8080:8080 -d --rm goals-node
+
+# frontend
+# docker run --name goals-frontend --network goals-net --rm -d -p 3000:3000 goals-react
+
+--- container
+
+# docker ps
+
+# docker ps -a
+
+# docker stop CONTAINER_NAME
+
+# docker container prune
+
+# docker container prune -a
+
+--- network
+
+# docker network
+
+# docker network create NETWORK_NAME
+
+# docker network ls
+
+--- volume
+
+# docker volume
+
+# docker volume ls
+
+# docker volume VOL_NAME inspect
+
+# docker volume rm VOL_NAME
+
+# docker volume prune
+
+--- general
+
+# docker logs CONTAINER_NAME
+
+# docker inspect CONTAINER_NAME
